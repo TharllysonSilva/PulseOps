@@ -1,8 +1,16 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:pulse_ops/app/providers.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../domain/entities/incident.dart';
 import '../providers/incidents_usecases_providers.dart';
+
+//BUSCAR INCIDENT POR ID
+final incidentByIdProvider =
+    FutureProvider.family<Incident?, String>((ref, id) {
+  final repo = ref.watch(incidentsRepositoryProvider);
+  return repo.getById(id);
+});
 
 // STREAM PARA UI
 final incidentsStreamProvider = StreamProvider<List<Incident>>((ref) {
@@ -46,8 +54,7 @@ class IncidentsController extends AsyncNotifier<void> {
     state = const AsyncLoading();
 
     state = await AsyncValue.guard(() async {
-      final sync = ref.read(syncIncidentsUsecaseProvider);
-      await sync();
+      await ref.read(syncFacadeProvider).run();
     });
   }
 }
