@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:pulse_ops/app/providers.dart';
+import 'package:pulse_ops/app/global_providers.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../domain/entities/incident.dart';

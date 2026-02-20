@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:pulse_ops/app/global_providers.dart';
 
-import '../../../../app/providers.dart';
+
 import '../controllers/incidents_controller.dart';
 import '../../../geo_weather/domain/services/geo_weather_service.dart';
 

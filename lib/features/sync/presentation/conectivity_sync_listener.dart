@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:pulse_ops/app/global_providers.dart';
 
-import '../../../app/providers.dart';
 
 final connectivitySyncListenerProvider = Provider<void>((ref) {
   final connectivity = Connectivity();
