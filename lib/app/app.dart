@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:pulse_ops/features/notifications/presentation/notification_router.dart';
+import 'package:pulse_ops/features/sync/presentation/conectivity_sync_listener.dart';
 import 'router.dart';
 
 class App extends ConsumerWidget {
@@ -7,7 +9,10 @@ class App extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    ref.watch(connectivitySyncListenerProvider);
+
     final router = ref.watch(appRouterProvider);
+    NotificationRouter.setRouter(router);
 
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,

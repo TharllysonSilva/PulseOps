@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:pulse_ops/app/providers.dart';
+import 'package:pulse_ops/app/global_providers.dart';
+
 import '../../domain/usecases/create_incident.dart';
 import '../../domain/usecases/get_incidents.dart';
 import '../../domain/usecases/sync_incidents.dart';
