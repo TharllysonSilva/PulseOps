@@ -3,6 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:pulse_ops/features/incidents/data/datasources/local/outbox_local_ds.dart';
 import 'package:pulse_ops/features/incidents/data/datasources/remote/incidents_remote__ds.dart';
+import 'package:pulse_ops/features/sync/data/sync_facade.dart';
 
 import '../core/http/dio_client.dart';
 import '../infra/db/app_db.dart';
@@ -11,10 +12,6 @@ import '../infra/db/app_db.dart';
 import '../features/incidents/data/datasources/local/incidents_local_ds.dart';
 import '../features/incidents/data/repositories/incidents_repository_impl.dart';
 import '../features/incidents/domain/repositories/incidents_repository.dart';
-
-// SYNC
-import '../features/sync/data/datasources/local/outbox_local_ds.dart';
-import '../features/sync/data/sync_facade.dart';
 
 // GEO WEATHER
 import '../features/geo_weather/data/geo_weather_service_impl.dart';

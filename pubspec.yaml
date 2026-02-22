@@ -79,3 +79,6 @@ dev_dependencies:
   riverpod_generator: ^2.4.3
   riverpod_lint: ^2.3.13
   lints: ^4.0.0
+
+flutter:
+  uses-material-design: true
