@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:pulse_ops/design/theme.dart';
 import 'package:pulse_ops/features/notifications/presentation/notification_router.dart';
 import 'package:pulse_ops/features/sync/presentation/conectivity_sync_listener.dart';
 import 'router.dart';
@@ -18,10 +19,7 @@ class App extends ConsumerWidget {
       debugShowCheckedModeBanner: false,
       title: 'PulseOps',
       routerConfig: router,
-      theme: ThemeData(
-        useMaterial3: true,
-        colorSchemeSeed: Colors.indigo,
-      ),
+      theme: AppTheme.light(),
     );
   }
 }
