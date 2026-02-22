@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:pulse_ops/design/components/app_scaffold.dart';
 import 'package:pulse_ops/design/components/empty_state.dart';
 import 'package:pulse_ops/design/components/status_chip.dart';
@@ -7,7 +8,6 @@ import 'package:pulse_ops/design/tokens/colors.dart';
 import 'package:pulse_ops/design/tokens/spacing.dart';
 import 'package:pulse_ops/design/tokens/typography.dart';
 import 'package:pulse_ops/features/incidents/domain/entities/incident.dart';
-
 
 import '../controllers/incidents_controller.dart';
 
@@ -52,11 +52,14 @@ class IncidentsListPage extends ConsumerWidget {
           decoration: const InputDecoration(labelText: 'Título'),
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(context), child: const Text('Cancelar')),
+          TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text('Cancelar')),
           ElevatedButton(
             child: const Text('Criar'),
             onPressed: () async {
-              await ref.read(incidentsControllerProvider.notifier)
+              await ref
+                  .read(incidentsControllerProvider.notifier)
                   .create(title: titleCtrl.text);
               if (context.mounted) Navigator.pop(context);
             },
@@ -142,7 +145,8 @@ class _StatCard extends StatelessWidget {
         child: Column(
           children: [
             Text(value.toString(),
-                style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
+                style:
+                    const TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
             Text(label),
           ],
         ),
@@ -158,10 +162,7 @@ class _IncidentCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => Navigator.pushNamed(
-        context,
-        '/incidents/${incident.id}',
-      ),
+      onTap: () => context.push('/incident/${incident.id}'),
       child: Container(
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(

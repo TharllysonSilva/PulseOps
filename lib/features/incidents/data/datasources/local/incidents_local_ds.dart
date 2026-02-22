@@ -13,6 +13,11 @@ class IncidentsLocalDataSource {
         .watch()
         .map((rows) => rows.map(IncidentDto.fromRow).toList());
   }
+   Stream<IncidentDto?> watchById(String id) {
+    return (db.select(db.incidents)..where((t) => t.id.equals(id)))
+        .watchSingleOrNull()
+        .map((row) => row == null ? null : IncidentDto.fromRow(row));
+  }
 
   Future<IncidentDto?> getById(String id) async {
     final row = await (db.select(db.incidents)

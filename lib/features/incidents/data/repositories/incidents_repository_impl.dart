@@ -1,10 +1,13 @@
 import 'dart:convert';
+
 import 'package:pulse_ops/features/incidents/data/datasources/local/outbox_local_ds.dart';
-import 'package:pulse_ops/features/incidents/data/datasources/remote/incidents_remote__ds.dart';
 
 import '../../domain/entities/incident.dart';
 import '../../domain/repositories/incidents_repository.dart';
+
 import '../datasources/local/incidents_local_ds.dart';
+import '../datasources/remote/incidents_remote__ds.dart';
+
 import '../mappers/incident_mapper.dart';
 
 class IncidentsRepositoryImpl implements IncidentsRepository {
@@ -18,6 +21,10 @@ class IncidentsRepositoryImpl implements IncidentsRepository {
     required this.outbox,
   });
 
+  // =========================
+  // WATCH (STREAMS)
+  // =========================
+
   @override
   Stream<List<Incident>> watchAll() {
     return local
@@ -26,10 +33,15 @@ class IncidentsRepositoryImpl implements IncidentsRepository {
   }
 
   @override
-  Future<Incident?> getById(String id) async {
-    final dto = await local.getById(id);
-    return dto == null ? null : IncidentMapper.toEntity(dto);
+  Stream<Incident?> watchById(String id) {
+    return local
+        .watchById(id)
+        .map((dto) => dto == null ? null : IncidentMapper.toEntity(dto));
   }
+
+  // =========================
+  // COMMANDS (WRITE)
+  // =========================
 
   @override
   Future<void> create(Incident incident) async {
@@ -43,7 +55,6 @@ class IncidentsRepositoryImpl implements IncidentsRepository {
     );
   }
 
-  @override
   Future<void> update(Incident incident) async {
     final dto = IncidentMapper.toDto(incident);
     await local.upsert(dto, dirty: true);
@@ -55,7 +66,6 @@ class IncidentsRepositoryImpl implements IncidentsRepository {
     );
   }
 
-  @override
   Future<void> delete(String id) async {
     await local.delete(id);
 
@@ -65,6 +75,10 @@ class IncidentsRepositoryImpl implements IncidentsRepository {
       payload: jsonEncode({'id': id}),
     );
   }
+
+  // =========================
+  // SYNC
+  // =========================
 
   @override
   Future<void> sync() async {

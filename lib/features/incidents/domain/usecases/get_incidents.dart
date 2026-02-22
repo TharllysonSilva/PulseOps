@@ -2,11 +2,8 @@ import '../entities/incident.dart';
 import '../repositories/incidents_repository.dart';
 
 class GetIncidents {
-  final IncidentsRepository repository;
+  final IncidentsRepository repo;
+  GetIncidents(this.repo);
 
-  GetIncidents(this.repository);
-
-  Stream<List<Incident>> call() {
-    return repository.watchAll();
-  }
+  Stream<List<Incident>> call() => repo.watchAll();
 }

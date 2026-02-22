@@ -9,6 +9,7 @@ import 'package:pulse_ops/design/tokens/colors.dart';
 import 'package:pulse_ops/design/tokens/spacing.dart';
 import 'package:pulse_ops/design/tokens/typography.dart';
 import 'package:pulse_ops/features/geo_weather/domain/services/geo_weather_service.dart';
+import 'package:pulse_ops/features/incidents/presentation/providers/incident_details_provider.dart';
 import '../controllers/incidents_controller.dart';
 
 class IncidentDetailsPage extends ConsumerWidget {

@@ -6,19 +6,15 @@ import '../features/incidents/presentation/pages/incident_details_page.dart';
 
 final appRouterProvider = Provider<GoRouter>((ref) {
   return GoRouter(
-    initialLocation: '/incidents',
     routes: [
       GoRoute(
-        path: '/incidents',
-        builder: (context, state) => const IncidentsListPage(),
-        routes: [
-          GoRoute(
-            path: ':id',
-            builder: (context, state) => IncidentDetailsPage(
-              incidentId: state.pathParameters['id']!,
-            ),
-          ),
-        ],
+        path: '/',
+        builder: (_, __) => const IncidentsListPage(),
+      ),
+      GoRoute(
+        path: '/incident/:id',
+        builder: (context, state) =>
+            IncidentDetailsPage(incidentId: state.pathParameters['id']!),
       ),
     ],
   );
