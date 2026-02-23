@@ -8,6 +8,7 @@ import 'package:pulse_ops/design/tokens/colors.dart';
 import 'package:pulse_ops/design/tokens/spacing.dart';
 import 'package:pulse_ops/design/tokens/typography.dart';
 import 'package:pulse_ops/features/incidents/domain/entities/incident.dart';
+import 'package:pulse_ops/features/incidents/presentation/models/incidents_filter.dart';
 
 import '../controllers/incidents_controller.dart';
 
@@ -16,7 +17,7 @@ class IncidentsListPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final incidentsAsync = ref.watch(incidentsStreamProvider);
+    final incidentsAsync = ref.watch(filteredIncidentsProvider);
 
     return AppScaffold(
       title: 'PulseOps',
@@ -86,6 +87,8 @@ class _Content extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        const _FilterSegment(),
+        const SizedBox(height: 16),
         _Header(incidents),
         const SizedBox(height: AppSpacing.lg),
         Expanded(
@@ -151,6 +154,38 @@ class _StatCard extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+class _FilterSegment extends ConsumerWidget {
+  const _FilterSegment();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final filter = ref.watch(incidentsFilterProvider);
+
+    return SegmentedButton<IncidentsFilter>(
+      segments: const [
+        ButtonSegment(
+          value: IncidentsFilter.all,
+          label: Text('Todos'),
+          icon: Icon(Icons.list),
+        ),
+        ButtonSegment(
+          value: IncidentsFilter.open,
+          label: Text('Abertos'),
+          icon: Icon(Icons.warning),
+        ),
+        ButtonSegment(
+          value: IncidentsFilter.resolved,
+          label: Text('Resolvidos'),
+          icon: Icon(Icons.check_circle),
+        ),
+      ],
+      selected: {filter},
+      onSelectionChanged: (value) =>
+          ref.read(incidentsFilterProvider.notifier).state = value.first,
     );
   }
 }

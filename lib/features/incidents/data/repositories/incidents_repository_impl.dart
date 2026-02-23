@@ -55,6 +55,7 @@ class IncidentsRepositoryImpl implements IncidentsRepository {
     );
   }
 
+  @override
   Future<void> update(Incident incident) async {
     final dto = IncidentMapper.toDto(incident);
     await local.upsert(dto, dirty: true);

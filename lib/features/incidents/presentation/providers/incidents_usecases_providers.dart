@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pulse_ops/app/global_providers.dart';
+import 'package:pulse_ops/features/incidents/domain/usecases/resolve_incident.dart';
 
 import '../../domain/usecases/create_incident.dart';
 import '../../domain/usecases/get_incidents.dart';
@@ -18,3 +19,7 @@ final getIncidentsUsecaseProvider = Provider((ref) {
 final syncIncidentsUsecaseProvider = Provider((ref) {
   return SyncIncidents(ref.watch(incidentsRepositoryProvider));
 });
+
+final resolveIncidentUsecaseProvider = Provider(
+  (ref) => ResolveIncident(ref.watch(incidentsRepositoryProvider)),
+);

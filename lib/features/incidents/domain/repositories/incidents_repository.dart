@@ -7,5 +7,9 @@ abstract class IncidentsRepository {
 
   Future<void> create(Incident incident);
 
+  Future<void> update(Incident incident);
+
+  Future<void> delete(String id);
+
   Future<void> sync();
 }

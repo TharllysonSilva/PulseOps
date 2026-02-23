@@ -9,8 +9,8 @@ import 'package:pulse_ops/design/tokens/colors.dart';
 import 'package:pulse_ops/design/tokens/spacing.dart';
 import 'package:pulse_ops/design/tokens/typography.dart';
 import 'package:pulse_ops/features/geo_weather/domain/services/geo_weather_service.dart';
+import 'package:pulse_ops/features/incidents/presentation/controllers/incidents_controller.dart';
 import 'package:pulse_ops/features/incidents/presentation/providers/incident_details_provider.dart';
-
 
 class IncidentDetailsPage extends ConsumerWidget {
   final String incidentId;
@@ -39,6 +39,8 @@ class IncidentDetailsPage extends ConsumerWidget {
               _InfoCard(incident),
               if (hasLocation)
                 _GeoSection(lat: incident.lat!, lng: incident.lng!),
+              const SizedBox(height: 20),
+              _ResolveButton(incident),
             ],
           );
         },
@@ -206,6 +208,41 @@ class _Card extends StatelessWidget {
           const SizedBox(height: 12),
           child,
         ],
+      ),
+    );
+  }
+}
+
+class _ResolveButton extends ConsumerWidget {
+  final dynamic incident;
+  const _ResolveButton(this.incident);
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    if (incident.status == 'resolved') {
+      return const SizedBox();
+    }
+
+    return Padding(
+      padding: const EdgeInsets.only(top: 8),
+      child: ElevatedButton.icon(
+        icon: const Icon(Icons.check_circle),
+        label: const Text('Marcar como resolvido'),
+        style: ElevatedButton.styleFrom(
+          backgroundColor: Colors.green,
+          minimumSize: const Size.fromHeight(50),
+        ),
+        onPressed: () async {
+          await ref
+              .read(incidentsControllerProvider.notifier)
+              .resolve(incident);
+
+          if (context.mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('Incidente resolvido')),
+            );
+          }
+        },
       ),
     );
   }
